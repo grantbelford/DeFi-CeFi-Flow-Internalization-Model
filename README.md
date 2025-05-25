@@ -1,6 +1,8 @@
 1inch Fusion / Binance Flow Internalization Model
 
-Step1. Download (real-time) Binance 1 minute ETH/USDT OHLCV & orderbook data (as orderbook data hist download n/a) as well as historical 1inch Fusion WETH/USDT data via DUNE API query.
+Step1-WETH-USDT-pair-Binance&1inch-download.ipynb
+Download (real-time) Binance 1 minute ETH/USDT OHLCV & orderbook data (as orderbook data hist download n/a) as well as historical 1inch Fusion WETH/USDT data via DUNE API query.
+
 
 For those wanting to begin directly on Step 2 below, the following google drive link has a zip file containing 2 directories (1inch & Binance) containing the historical data 
 Copy the 2 directories into the same folder holding the below .ipynb files. 
