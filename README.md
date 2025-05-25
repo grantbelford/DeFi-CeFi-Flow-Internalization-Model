@@ -9,7 +9,9 @@ The Dune query code is is Dune-1inch-WETH-USDT-query.pdf, currently set to colle
 
 For those wanting to begin directly on Step 2 below, the following google drive link has a zip file containing 2 directories (1inch & Binance) containing the hist data. 
 Unzip & copy the 2 directories into the same folder holding the below .ipynb files. 
+
 https://drive.google.com/file/d/1D0zzPskb0rbmYdp5622mdsdLviD87iIc/view?usp=sharing
+
 
 Step2-WETH-USDT-pair-1inch-Query&Analysis.ipynb 
 
