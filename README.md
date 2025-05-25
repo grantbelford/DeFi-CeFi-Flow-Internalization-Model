@@ -8,7 +8,7 @@ The Dune query for the historical 1inch WETH-USDT trade data can be run directly
 The Dune query code is in Dune-1inch-WETH-USDT-query.pdf, currently set to collect the previous 72hrs of data as can be seen in row 49 in the code.
 
 For those wanting to begin directly on Step 2 below, the following google drive link has a zip file containing 2 directories (1inch & Binance) containing the hist data. 
-Unzip & copy the 2 directories into the same folder holding the below .ipynb files. 
+Unzip & copy the 2 directories into the same folder holding the below .ipynb file. 
 
 https://drive.google.com/file/d/1D0zzPskb0rbmYdp5622mdsdLviD87iIc/view?usp=sharing
 
