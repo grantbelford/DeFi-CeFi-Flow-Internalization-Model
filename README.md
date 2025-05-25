@@ -18,7 +18,7 @@ Step2-WETH-USDT-pair-1inch-Query&Analysis.ipynb
 Backtest above data to determine if it is better immediately offset the 1inch Fusion WETH/USDT trades on Binance or warehouse the 1inch Fusion trades internally awaiting natural offset.
 Subsequent code allows you to see the development of the portfolio over time.
 
-1_Flow-Internalization-Model-1inch-Binance-1trade-drilldown.png
+1_Flow-Internalization-Model-1inch-Binance-1-trade-drilldown.png
 
 Using 1 of the 1inch trades the .png works through the logic in Step2 on how the hedge pnl & warehouse pnl calculations are performed leading to the decision whether to hedge or warehouse. 
 
