@@ -22,7 +22,7 @@ Subsequent code allows you to see the development of the portfolio over time.
 
 Using 1 of the 1inch trades the .png works through the logic in Step2 on how the hedge pnl & warehouse pnl calculations are performed leading to the decision whether to hedge or warehouse. 
 
-Step2b_i - Flow Internalization Analysis: performs hedge vs. warehouse analysis & generatees flow_internalization_results.csv
+Step2b_i - Flow Internalization Analysis: performs hedge vs. warehouse analysis & generates flow_internalization_results.csv
 
 Step2b_ii - Slippage Param - Calibration: Performs standalone comparison of using formulaic slippage param vs. actual binance orderbook liquidity at 1inch trade execution times. Results saved as slippage_comparison_vs_orderbook.csv
 
