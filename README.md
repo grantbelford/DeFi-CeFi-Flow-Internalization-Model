@@ -1,6 +1,6 @@
 1inch Fusion / Binance Flow Internalization Model
 
-Step1-WETH-USDT-pair-Binance&1inch-download.ipynb
+*Step1-WETH-USDT-pair-Binance&1inch-download.ipynb*
 
 Download (real-time) Binance 1 minute ETH/USDT OHLCV & orderbook data (as cannot download historical Binance *orderbook* (bid/ask) data) as well as historical 1inch Fusion WETH/USDT data via DUNE API query.
 
@@ -13,7 +13,7 @@ Unzip & copy the 2 directories into the same folder holding the below .ipynb fil
 https://drive.google.com/file/d/1D0zzPskb0rbmYdp5622mdsdLviD87iIc/view?usp=sharing
 
 
-Step2-WETH-USDT-pair-1inch-Query&Analysis.ipynb 
+*Step2-WETH-USDT-pair-1inch-Query&Analysis.ipynb*
 
 Backtest above data to determine if it is better immediately offset the 1inch Fusion WETH/USDT trades on Binance or warehouse the 1inch Fusion trades internally awaiting natural offset.
 Subsequent code allows you to see the development of the portfolio over time.
