@@ -1,34 +1,82 @@
-1inch Fusion / Binance Flow Internalization Model
+# DeFi (1inch) - CeFi (Binance) Flow Internalization
 
-*Step1-WETH-USDT-pair-Binance&1inch-download.ipynb*
+**WETH/USDT 1inch Fusion Flow | Hedge vs. Warehouse Decision**
 
-Download (real-time) Binance 1 minute ETH/USDT OHLCV & orderbook data (as cannot download historical Binance *orderbook* (bid/ask) data) as well as historical 1inch Fusion WETH/USDT data via DUNE API query.
+**📄 Download the full research note: [`Flow-Internalization-Report.pdf`](Flow-Internalization-Report.pdf)** (4 pages)
 
-The Dune query for the historical 1inch WETH-USDT trade data can be run directly in the dune.com/queries/ GUI and then the csv file loaded via the above .ipynb file.
-The Dune query code is in 1inchFusionDuneQuery.pdf, currently set to collect the previous 72hrs of data as can be seen in row 49 in the code.
+## What this is
 
-For those wanting to begin directly on Step 2 below, the following google drive link has a zip file containing 2 directories (1inch & Binance) containing the hist data. 
-Unzip & copy the 2 directories into the same folder holding the below .ipynb file. 
+- Decides whether each fill should be hedged on Binance or warehoused.
+- Goal: avoid toxic-flow losses while preserving edge from benign flow.
 
-https://drive.google.com/file/d/1D0zzPskb0rbmYdp5622mdsdLviD87iIc/view?usp=sharing
+## Main takeaway
 
+- Hedge-vs-warehouse is mostly loss avoidance, not standalone alpha.
+- Bigger opportunity is upstream: intent pricing, fill selection, and avoiding toxic large flow.
 
-*Step2-WETH-USDT-pair-1inch-Query&Analysis.ipynb*
+## Key findings
 
-Backtest above data to determine if it is better immediately offset the 1inch Fusion WETH/USDT trades on Binance or warehouse the 1inch Fusion trades internally awaiting natural offset.
-Subsequent code allows you to see the development of the portfolio over time.
+- Hedging is cheap when executable; depth-limited fills and stress regimes remain caveats.
+- Size is the clearest toxicity axis; short-window price correlation is not predictive.
+- Mid-size flow is benign; fills above 10 ETH carry the main warehouse risk.
+- Policy replay: selective `-$704` vs always hedge `-$1,247` vs always warehouse `-$5,426`; hindsight best-case `+$8,391`.
 
-1_Flow-Internalization-Model-1inch-Binance-1-trade-drilldown.png
+## Rule of thumb
 
-Using 1 of the 1inch trades the .png works through the logic in Step2 on how the hedge pnl & warehouse pnl calculations are performed leading to the decision whether to hedge or warehouse. 
+- Warehouse mid-size flow: `0.3–1.29 ETH`.
+- Hedge large flow: model starts hedging near `2.9 ETH`; automatically hedge above `10 ETH`.
+- Do not use short-window price correlation as a decision signal yet; it was tested and was not reliable in this sample.
 
-Step2b_i - Flow Internalization Analysis: performs hedge vs. warehouse analysis & generates flow_internalization_results.csv
+## Data used
 
-Step2b_ii - Slippage Param - Calibration: Performs standalone comparison of using formulaic slippage param vs. actual binance orderbook liquidity at 1inch trade execution times. Results saved as slippage_comparison_vs_orderbook.csv
+- Pair: `WETH/USDT`.
+- Sources: 1inch Fusion Dune query `4966942` plus Binance ETH/USDT snapshots.
+- Window: May 5–7, 2025.
+- Sample: 1,017 fills, 6,600 snapshots, 858 replay fills with valid 60-minute bars.
 
-Step2c. Flow Internalization Model - Inventory aware: Portfolio begins with initial ETH (100) & USDT (100,000) balances and using earlier Step2bi generated (flow_internalization_results.csv) file 
-generates a portfolio_tracking_results.csv file. 
+## Decision model
 
-Step2d_i to _iv uses the portfolio_tracking_results.csv file to generate a Portfolio-Tracking-Visualization.html file which allows the user to see the evolution of the Portfolio over time.
+- Compares expected hedge PnL vs warehouse PnL for each fill.
+- Inputs: size, mid price, captured edge, taker fee, slippage, toxicity, hedge delay.
+- Captured edge cancels in the branch comparison; hedge costs vs toxicity drive the decision.
 
-Above is a work in progress - future postings to include more in-depth flow correlation analysis & ML predict.
+## Current parameters
+
+- Binance taker fee: `6.66 bps`.
+- Slippage curve: `0.021 + 0.0056 * size_ETH` bps.
+- Hedge delay: `33 seconds`.
+- Toxicity curve: size-based, using 60-minute markouts.
+
+## Dashboard
+
+- Self-contained HTML; no external dependencies.
+- Includes backtest summary, decision calculator, live fill data, Binance depth, and recommendations.
+
+## Live updater
+
+- Runs every 5 minutes.
+- Pulls Binance depth via public REST and recent Fusion fills via Dune.
+- Uses stale-data guards and live-to-last-known fallback.
+- Python and JavaScript engines run the same decision logic; test cases must match before live output is published.
+
+## Limitations
+
+- Small sample: 2 days, 1 pair, 1 venue, rallying ETH regime.
+- Model settings are based on this 2-day sample and should be refreshed regularly with new live data.
+- Stress liquidity, queue position, and real hedge latency are not fully modeled.
+- Funding, borrow, transfer costs, and capital usage are excluded.
+- Inventory is assumed pre-positioned on both venues.
+
+## Next steps
+
+- Add rolling calibration for toxicity and slippage.
+- Keep collecting live snapshots; train LSTM after 60+ days of data.
+- Extend to more pairs and improve queue/impact simulation.
+- Keep spread stat-arb closed after failed replication.
+
+## Status
+
+- Research memo: final.
+- Dashboard and live updater: implemented.
+- Rolling calibration: planned.
+- Multi-pair expansion and queue/impact model: candidates.
